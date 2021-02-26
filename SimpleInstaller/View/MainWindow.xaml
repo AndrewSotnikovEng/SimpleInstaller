@@ -1,0 +1,78 @@
+﻿<Window x:Class="SimpleInstaller.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SimpleInstaller.View"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="550" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="ItemProertyContainer" TargetType="StackPanel">
+            <Setter Property="Margin" Value="0,5,0,0" />
+            <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+        <Style x:Key="TextBlockItem" TargetType="TextBlock">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Width" Value="470" />
+        </Style>
+        <Style x:Key="Button" >
+            <Setter Property="Button.FontSize" Value="14"/>
+            <Setter Property="Button.Width" Value="60"/>
+            <Setter Property="Button.Height" Value="25"/>
+            <Setter Property="Button.Margin" Value="20,20,0,0" />
+        </Style>
+        <Style x:Key="ListBoxContainer" TargetType="ListBox">
+            <Setter Property="Margin" Value="20,10,0,10" />
+            <Setter Property="Width" Value="500" />
+            <Setter Property="Height" Value="400" />
+        </Style>
+        <Style x:Key="HeaderTitle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,10,0,0" />
+            <Setter Property="Width" Value="500" />
+            <Setter Property="FontSize" Value="32" />
+            <Setter Property="TextAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="BottomButtonsContainer" TargetType="StackPanel">
+            <Setter Property="Margin" Value="0,5,5,0" />
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+        </Style>
+        <Style x:Key="TemplateRow" TargetType="StackPanel">
+            <Setter Property="Margin" Value="0,5,5,0" />
+            <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+    </Window.Resources>
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="File">
+                    <MenuItem Header="Exit" />
+                </MenuItem>
+                <MenuItem Header="Edit">
+                    <MenuItem Header="Switch to viewer" Command="{Binding SwitchToViewerCmd}"/>
+                    <Separator/>
+                    <MenuItem Header="Switch to editor" Command="{Binding SwitchToEditorCmd}" />
+                </MenuItem>
+                <MenuItem Header="Help">
+                    <MenuItem Header="About" />
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <TextBlock Text="SILENT INSTALLER" Style="{StaticResource HeaderTitle}"/>
+        <ListBox ItemsSource="{Binding Items}" Style="{StaticResource ListBoxContainer}"
+                 SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Style="{StaticResource TemplateRow}" MouseDown="MouseDoubleClickHandler">
+                        <TextBlock Style="{StaticResource TextBlockItem}" Text="{Binding Name}"/>
+                        <CheckBox IsChecked="{Binding IsChecked}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Style="{StaticResource BottomButtonsContainer}">
+            <Button Style="{StaticResource Button}" Content="OK" Command="{Binding CommitTaskItemCmd}"/>
+            <Button Style="{StaticResource Button}" Content="Cancel"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
