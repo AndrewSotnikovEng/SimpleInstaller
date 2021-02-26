@@ -11,7 +11,7 @@ namespace SimpleInstaller.Model
     {
         private string name;
         private string url;
-        private string rawCmd;
+        private string rawCommand;
 
         public string Name { get => name; set { 
                 name = value;
@@ -24,19 +24,19 @@ namespace SimpleInstaller.Model
                 OnPropertyChanged("Url");
             }
             }
-        public string RawCmd { get => rawCmd; set
+        public string RawCommand { get => rawCommand; set
             {
-                rawCmd = value;
-                OnPropertyChanged("RawCmd");
+                rawCommand = value;
+                OnPropertyChanged("RawCommand");
             }
             }
         public bool IsChecked { get; set; }
 
-        public Item(string name, string url, string rawCmd, bool isChecked = false)
+        public Item(string name, string url, string rawCommand, bool isChecked = false)
         {
             Name = name;
             Url = url;
-            RawCmd = rawCmd;
+            RawCommand = rawCommand;
             IsChecked = isChecked;
         }
     }

@@ -54,7 +54,7 @@
                     <MenuItem Header="Switch to editor" Command="{Binding SwitchToEditorCmd}" />
                 </MenuItem>
                 <MenuItem Header="Help">
-                    <MenuItem Header="About" />
+                    <MenuItem Header="About" Click="AboutMenuItem_Click"/>
                 </MenuItem>
             </Menu>
         </DockPanel>

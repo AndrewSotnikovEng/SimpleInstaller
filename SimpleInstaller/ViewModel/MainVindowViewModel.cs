@@ -44,7 +44,10 @@ namespace SimpleInstaller.ViewModel
 
         private void SendSelectedItem(object obj)
         {
-            MessengerStatic.NotifySelectedItemInitializing(SelectedItem);
+            if (!isViewerMode)
+            {
+                MessengerStatic.NotifySelectedItemInitializing(SelectedItem);
+            }
         }
 
         private void UpdateSelectedItem(object obj)

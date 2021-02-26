@@ -37,7 +37,7 @@ namespace SimpleInstaller.ViewModel
         {
             SelectedItem.Name = Name;
             SelectedItem.Url = Url;
-            SelectedItem.RawCmd = RawCommand;
+            SelectedItem.RawCommand = RawCommand;
             MessengerStatic.NotifySelectedItemUpdating(SelectedItem);
             MessengerStatic.NotifyAddItemWindowClosed(null);
         }
@@ -47,7 +47,7 @@ namespace SimpleInstaller.ViewModel
             SelectedItem = (Item)obj;
             Name = SelectedItem.Name;
             Url = SelectedItem.Url;
-            RawCommand = SelectedItem.RawCmd;
+            RawCommand = SelectedItem.RawCommand;
 
         }
     }
