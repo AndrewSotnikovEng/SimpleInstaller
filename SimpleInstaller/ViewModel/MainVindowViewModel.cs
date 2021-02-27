@@ -1,9 +1,11 @@
 ﻿using SimpleInstaller.Commands;
+using SimpleInstaller.Context;
 using SimpleInstaller.Model;
 using SimpleInstaller.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +42,24 @@ namespace SimpleInstaller.ViewModel
             SwitchToViewerCmd = new RelayCommand(o => { SwitchToViewer(); }, SwtichToViewerCanExecute);
             SwitchToEditorCmd = new RelayCommand(o => { SwtichToEditor(); }, SwitchToEditorCanExecute);
 
+            loadData();
+
         }
+
+        void loadData()
+        {
+            ItemsContext db = new ItemsContext();
+
+
+
+            
+            db.Items.Add(new Item("Some element", "url", "new url"));
+
+            db.SaveChanges();
+
+        }
+
+        
 
         private void SendSelectedItem(object obj)
         {
