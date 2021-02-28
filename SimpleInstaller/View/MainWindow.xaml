@@ -13,7 +13,7 @@
         </Style>
         <Style x:Key="TextBlockItem" TargetType="TextBlock">
             <Setter Property="Height" Value="24" />
-            <Setter Property="Width" Value="470" />
+            <Setter Property="Width" Value="450" />
         </Style>
         <Style x:Key="Button" >
             <Setter Property="Button.FontSize" Value="14"/>
@@ -24,7 +24,7 @@
         <Style x:Key="ListBoxContainer" TargetType="ListBox">
             <Setter Property="Margin" Value="20,10,0,10" />
             <Setter Property="Width" Value="500" />
-            <Setter Property="Height" Value="400" />
+            <Setter Property="Height" Value="380" />
         </Style>
         <Style x:Key="HeaderTitle" TargetType="TextBlock">
             <Setter Property="Margin" Value="0,10,0,0" />
@@ -59,6 +59,14 @@
             </Menu>
         </DockPanel>
         <TextBlock Text="SILENT INSTALLER" Style="{StaticResource HeaderTitle}"/>
+        <StackPanel Orientation="Horizontal" Height="24" HorizontalAlignment="Right" Visibility="{Binding EditModeVisibilty}">
+            <TextBlock>Edit mode</TextBlock>
+            <Image>
+                <Image.Source>
+                    <BitmapImage  UriSource="SimpleInstaller/Resources/edit_mode.png" />
+                </Image.Source>
+            </Image>
+        </StackPanel>
         <ListBox ItemsSource="{Binding Items}" Style="{StaticResource ListBoxContainer}"
                  SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ListBox.ItemTemplate>
@@ -69,6 +77,13 @@
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu Visibility="{Binding EditModeVisibilty}">
+                    <MenuItem Header="Добавить"></MenuItem>
+                    <MenuItem Header="Изменить" Command="{Binding EditListBoxItemCmd}"></MenuItem>
+                    <MenuItem Header="Удалить" Command="{Binding DeleteListBoxItemCmd}"></MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
         </ListBox>
         <StackPanel Style="{StaticResource BottomButtonsContainer}">
             <Button Style="{StaticResource Button}" Content="OK" Command="{Binding CommitTaskItemCmd}"/>

@@ -54,5 +54,10 @@ namespace SimpleInstaller.Model
             RawCommand = rawCommand;
             IsChecked = isChecked;
         }
+
+        public Item()
+        {
+
+        }
     }
 }

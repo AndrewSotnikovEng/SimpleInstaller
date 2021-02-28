@@ -5,10 +5,12 @@ using SimpleInstaller.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SimpleInstaller.ViewModel
 {
@@ -17,23 +19,31 @@ namespace SimpleInstaller.ViewModel
         public RelayCommand ShowNewItemWinCmd;
         private Item selectedItem;
 
+        ItemsContext db = new ItemsContext();
+
         public RelayCommand SwitchToViewerCmd { get; }
         public RelayCommand SwitchToEditorCmd { get; }
+        public RelayCommand EditListBoxItemCmd { get; }
+        public RelayCommand DeleteListBoxItemCmd { get; }
 
-        public Item SelectedItem { get => selectedItem; set
+        public Item SelectedItem
+        {
+            get => selectedItem; set
             {
                 selectedItem = value;
                 OnPropertyChanged("SelectedItem");
             }
         }
 
+        public Visibility EditModeVisibilty { get => editModeVisibilty; set
+            {
+                editModeVisibilty = value;
+                OnPropertyChanged("EditModeVisibilty");
+            }
+        }
+
         public MainVindowViewModel()
         {
-
-            Items.Add(new Item("Notepad ++", "url1", "cmd1"));
-            Items.Add(new Item("Victoria", "url2", "cmd2"));
-            Items.Add(new Item("Firefox", "url3", "cmd3"));
-            Items.Add(new Item("Eclipse", "url4", "cmd4"));
 
             MessengerStatic.SelectedItemUpdated += UpdateSelectedItem;
             MessengerStatic.MainWinListBoxClicked += SendSelectedItem;
@@ -42,24 +52,53 @@ namespace SimpleInstaller.ViewModel
             SwitchToViewerCmd = new RelayCommand(o => { SwitchToViewer(); }, SwtichToViewerCanExecute);
             SwitchToEditorCmd = new RelayCommand(o => { SwtichToEditor(); }, SwitchToEditorCanExecute);
 
-            loadData();
+
+            EditListBoxItemCmd = new RelayCommand(o => { EidtItem(); }, EditItemCanExecute);
+            DeleteListBoxItemCmd = new RelayCommand(o => { DeleteItem(); }, DeleteItemCanExecute);
+
+            LoadData();
+
+
 
         }
 
-        void loadData()
+        private bool EditItemCanExecute(object arg)
         {
-            ItemsContext db = new ItemsContext();
+            return true;
+        }
 
+        private void EidtItem()
+        {
+            MessengerStatic.NotifySelectedItemInitializing(SelectedItem);
+        }
 
+        private bool DeleteItemCanExecute(object arg)
+        {
+            return true;
+        }
 
-            
-            db.Items.Add(new Item("Some element", "url", "new url"));
+        private void DeleteItem()
+        {
+            db.Items.Remove(SelectedItem);
+            db.SaveChanges();
+        }
+
+        void LoadData()
+        {
+            db.Items.Load();
+            Items = db.Items.Local.ToBindingList();
+
+            //db.Items.Add(new Item("First item","",""));
+            //db.Items.Add(new Item("Second item", "", ""));
+            //db.Items.Add(new Item("Third item", "", ""));
+            //db.Items.Add(new Item("Fourth item", "", ""));
+            //db.Items.Add(new Item("Fifth item", "", ""));
+
 
             db.SaveChanges();
-
         }
 
-        
+
 
         private void SendSelectedItem(object obj)
         {
@@ -74,7 +113,7 @@ namespace SimpleInstaller.ViewModel
             SelectedItem = (Item)obj;
         }
 
-  
+
 
         private bool SwitchToEditorCanExecute(object arg)
         {
@@ -86,11 +125,15 @@ namespace SimpleInstaller.ViewModel
         private void SwitchToViewer()
         {
             isViewerMode = true;
+            db.SaveChanges();
+
+            EditModeVisibilty = Visibility.Hidden;
         }
 
         private void SwtichToEditor()
         {
             isViewerMode = false;
+            EditModeVisibilty = Visibility.Visible;
         }
 
         private bool SwtichToViewerCanExecute(object arg)
@@ -113,6 +156,19 @@ namespace SimpleInstaller.ViewModel
         }
 
         public string Label { get; set; } = "label";
-        public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
+
+        private IEnumerable<Item> items;
+        private Visibility editModeVisibilty = Visibility.Hidden;
+
+        public IEnumerable<Item> Items
+        {
+            get => items;
+            set
+            {
+                items = value;
+                OnPropertyChanged("Items");
+
+            }
+        }
     }
 }
