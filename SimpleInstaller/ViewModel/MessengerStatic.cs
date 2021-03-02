@@ -34,13 +34,18 @@ namespace SimpleInstaller.ViewModel
 
 
 
+        public static event Action<object> MainWindowClosed;
+
+        public static void NotifyMainWindowClosed(object o)
+            => MainWindowClosed?.Invoke(o);
+
+
+
         public static event Action<object> SelectedItemUpdated;
 
         public static void NotifySelectedItemUpdating(object o)
             => SelectedItemUpdated?.Invoke(o);
 
-
-        
 
 
 

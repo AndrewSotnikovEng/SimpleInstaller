@@ -23,8 +23,11 @@ namespace SimpleInstaller.ViewModel
 
         public RelayCommand SwitchToViewerCmd { get; }
         public RelayCommand SwitchToEditorCmd { get; }
+        public RelayCommand AddListBoxItemCmd { get; }
         public RelayCommand EditListBoxItemCmd { get; }
         public RelayCommand DeleteListBoxItemCmd { get; }
+        public RelayCommand RunInstallationCmd { get; }
+        public RelayCommand QuitCmd { get; }
 
         public Item SelectedItem
         {
@@ -52,14 +55,53 @@ namespace SimpleInstaller.ViewModel
             SwitchToViewerCmd = new RelayCommand(o => { SwitchToViewer(); }, SwtichToViewerCanExecute);
             SwitchToEditorCmd = new RelayCommand(o => { SwtichToEditor(); }, SwitchToEditorCanExecute);
 
-
+            AddListBoxItemCmd = new RelayCommand(o => { AddItem(); }, AddItemCanExecute);
             EditListBoxItemCmd = new RelayCommand(o => { EidtItem(); }, EditItemCanExecute);
             DeleteListBoxItemCmd = new RelayCommand(o => { DeleteItem(); }, DeleteItemCanExecute);
+
+
+            RunInstallationCmd = new RelayCommand(o => { RunInstallation(); }, RunInstallationCanExecute);
+            QuitCmd = new RelayCommand(o => { Quit(); }, QuitCanExecute);
 
             LoadData();
 
 
 
+        }
+
+        private bool QuitCanExecute(object arg)
+        {
+            return true;
+        }
+
+        private void Quit()
+        {
+            MessengerStatic.NotifyMainWindowClosed(null);
+        }
+
+        private bool RunInstallationCanExecute(object arg)
+        {
+            bool result = isViewerMode ? true : false;
+
+            return result;
+        }
+
+        private void RunInstallation()
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool AddItemCanExecute(object arg)
+        {
+            return true;
+        }
+
+        private void AddItem()
+        {
+            SelectedItem = new Item("", "", "");
+            db.Items.Add(SelectedItem);
+            MessengerStatic.NotifySelectedItemInitializing(SelectedItem);
+            db.SaveChanges();
         }
 
         private bool EditItemCanExecute(object arg)

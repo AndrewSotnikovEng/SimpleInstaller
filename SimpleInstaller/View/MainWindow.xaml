@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleInstaller.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="550" WindowStartupLocation="CenterScreen">
+        Title="Simple installer" Height="600" Width="550" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="ItemProertyContainer" TargetType="StackPanel">
             <Setter Property="Margin" Value="0,5,0,0" />
@@ -46,7 +46,7 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="File">
-                    <MenuItem Header="Exit" />
+                    <MenuItem Header="Exit" Command="{Binding QuitCmd}"/>
                 </MenuItem>
                 <MenuItem Header="Edit">
                     <MenuItem Header="Switch to viewer" Command="{Binding SwitchToViewerCmd}"/>
@@ -79,15 +79,15 @@
             </ListBox.ItemTemplate>
             <ListBox.ContextMenu>
                 <ContextMenu Visibility="{Binding EditModeVisibilty}">
-                    <MenuItem Header="Добавить"></MenuItem>
+                    <MenuItem Header="Добавить" Command="{Binding AddListBoxItemCmd}"></MenuItem>
                     <MenuItem Header="Изменить" Command="{Binding EditListBoxItemCmd}"></MenuItem>
                     <MenuItem Header="Удалить" Command="{Binding DeleteListBoxItemCmd}"></MenuItem>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
         <StackPanel Style="{StaticResource BottomButtonsContainer}">
-            <Button Style="{StaticResource Button}" Content="OK" Command="{Binding CommitTaskItemCmd}"/>
-            <Button Style="{StaticResource Button}" Content="Cancel"/>
+            <Button Style="{StaticResource Button}" Content="OK" Command="{Binding RunInstallationCmd}"/>
+            <Button Style="{StaticResource Button}" Content="Cancel" Command="{Binding QuitCmd}"/>
         </StackPanel>
     </StackPanel>
 </Window>

@@ -29,8 +29,13 @@ namespace SimpleInstaller.View
             InitializeComponent();
             this.DataContext = new MainVindowViewModel();
             MessengerStatic.SelectedItemInitialized += CreateAddItemWindow;
-            
-            
+            MessengerStatic.MainWindowClosed += CloseWin;
+
+        }
+
+        private void CloseWin(object obj)
+        {
+            this.Close();
         }
 
         private void MouseDoubleClickHandler(object sender, MouseButtonEventArgs e)
@@ -47,6 +52,8 @@ namespace SimpleInstaller.View
             addItemWindow.Show();
             MessengerStatic.NotifySelectedItemSending(obj);
         }
+     
+
 
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
         {

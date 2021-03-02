@@ -25,11 +25,21 @@ namespace SimpleInstaller.ViewModel
         {
             MessengerStatic.SelectedItemSent += AssignSelectedItem;
 
-            UpdateItemCmd = new RelayCommand(o => { UpdateItem(); }, UpdateImteCanExecute);
+            UpdateItemCmd = new RelayCommand(o => { UpdateItem(); }, UpdateItemCanExecute);
         }
 
-        private bool UpdateImteCanExecute(object arg)
+        private bool UpdateItemCanExecute(object arg)
         {
+            //bool result = false;
+            //if (!String.IsNullOrEmpty(SelectedItem.Name) &&
+            //    !String.IsNullOrEmpty(SelectedItem.Url) &&
+            //    !String.IsNullOrEmpty(SelectedItem.RawCommand)
+            //    )
+            //{
+            //    result = true;
+            //};
+
+            //return result;
             return true;
         }
 
@@ -44,11 +54,15 @@ namespace SimpleInstaller.ViewModel
 
         private void AssignSelectedItem(object obj)
         {
+
             SelectedItem = (Item)obj;
+
             Name = SelectedItem.Name;
             Url = SelectedItem.Url;
             RawCommand = SelectedItem.RawCommand;
 
         }
+
+
     }
 }

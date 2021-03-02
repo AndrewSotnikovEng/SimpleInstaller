@@ -15,7 +15,7 @@
     
     <Grid>
         <StackPanel>
-            <TextBlock Style="{StaticResource TextBlock}" Width="600" FontSize="30" Margin="100,20,0,0"> Easy installer</TextBlock>
+            <TextBlock Style="{StaticResource TextBlock}" Width="600" FontSize="30" Margin="100,20,0,0"> Silent installer</TextBlock>
 
             <StackPanel>
                 <Grid Margin="100, 30" HorizontalAlignment="Left" VerticalAlignment="Top">
